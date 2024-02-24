@@ -1,0 +1,45 @@
+
+
+<!--CALENDARIO LABORAL-->
+
+<div   x-ref="laboral"
+       x-init="console.log('cargado htmx',htmx.version);htmx.process($refs.contenido);htmx.process($refs.contenido2); cargar();"
+       x-show="tab2 == 'calendario_laboral'">
+    
+    <div class="m-2 rounded-[5px] shadow w-[100% - 80px] h-[50%] bg-white">
+     
+      <div @click="axios.post('/datos_servidor',{'nombre':'juan jose'}).then((resp)=>{
+                   datos_servidor = resp.data ; console.log('DATOS SERVIDOR :--->',resp)
+                   })"
+             >Buscar2</div>
+      <template x-for="n in datos_servidor">
+        <div x-text="n.nombre"></div>
+      </template>
+      <div x-ref="contenido2"
+            hx-post="/datos_servidor2" hx-target="#resultado" hx-trigger="click">enviar</div>
+      <div id="resultado"></div>
+      <div  x-ref="contenido"
+            id="nuevo-contenido"
+            hx-target="this" hx-post="/datos_servidor2" hx-trigger="every 10s"></div>
+
+      <div x-text="[1,2,3,4,5].reduce((ac,nu)=>{return ac + nu},0)"></div>
+      <div x-text="[1,2,3,4,5].filter((el)=>{return el > 2})"></div>
+
+      <div html="cas"></div>
+
+      <div @men.window="console.log('EVENTO CURIOSO',$event.detail)"></div>
+      <div @click="$dispatch('men', 'Hello World!')">Enviar</div>
+
+      <div x-ref="pdfContainer"></div>
+      <button onclick="guardarPDF()">Guardar PDF firmado</button>
+
+
+
+
+
+    </div>
+
+
+
+
+</div>
